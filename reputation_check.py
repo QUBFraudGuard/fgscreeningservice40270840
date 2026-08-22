@@ -9,7 +9,7 @@ RISK_THRESHOLD = int(os.environ.get("REPUTATION_RISK_THRESHOLD", "70"))
 
 def check(transaction):
     card = transaction.get("card", "")
-
+    
     try:
         resp = requests.get(
             REPUTATION_SERVICE_URL,
