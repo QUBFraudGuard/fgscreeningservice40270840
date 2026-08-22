@@ -10,6 +10,8 @@ import re
 CARD_PATTERN = re.compile(r"^\d{4}$")
 COUNTRY_PATTERN = re.compile(r"^[A-Z]{2}$")
 
+# malformed or missing input handling for card and country
+
 def validate_fields(card, country):
     if not CARD_PATTERN.match(card):
         return f"invalid card format: {card or 'missing'}"
@@ -31,7 +33,7 @@ def screen_transaction_full(raw, threshold):
     format_error = validate_fields(card, country)
     if format_error:
         return {"transaction": raw, "decision": "ERROR", "reason": format_error}
-        
+
     transaction = {"raw": raw, "card": card, "country": country}
 
     for check_fn in [blocklist_check.check, country_check.check, reputation_check.check]:
@@ -43,10 +45,7 @@ def screen_transaction_full(raw, threshold):
 
 
 def screen_batch_full(items, threshold):
-    """Same shape/behaviour as screening.py's screen_batch, but runs every
-    transaction through screen_transaction_full (amount + our extra checks)
-    instead of just the amount check.
-    """
+    
     transactions = [t for t in items.split(",") if t != ""] if items else []
 
     results = [screen_transaction_full(t, threshold) for t in transactions]

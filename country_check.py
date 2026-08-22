@@ -8,6 +8,6 @@ BLOCKED_COUNTRIES = set(
 
 def check(transaction):
 
-    if transaction["country"] in BLOCKED_COUNTRIES:
+    if transaction.get("country", "") in BLOCKED_COUNTRIES:
         return {"reason": f"country {transaction['country']} is restricted"}
     return None

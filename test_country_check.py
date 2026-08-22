@@ -1,0 +1,20 @@
+import country_check
+
+
+def test_country_on_blocklist():
+    result = blocklist_check.check({"country": "ES"})
+    assert result == {"reason": f"country {transaction['country']} is restricted"}
+
+
+def test_country_not_on_blocklist():
+    result = blocklist_check.check({"country": "US"})
+    assert result is None
+
+def test_lc_country_on_blocklist():
+    result = blocklist_check.check({"country": "ir"})
+    assert result == {"reason": f"country {transaction['country']} is restricted"}
+
+
+def test_missing_country_key_does_not_crash():
+    result = blocklist_check.check({})
+    assert result is None

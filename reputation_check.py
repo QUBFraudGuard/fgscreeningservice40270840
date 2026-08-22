@@ -6,19 +6,27 @@ REPUTATION_SERVICE_URL = os.environ.get(
 )
 RISK_THRESHOLD = int(os.environ.get("REPUTATION_RISK_THRESHOLD", "70"))
 
+
 def check(transaction):
+    card = transaction.get("card", "")
+
     try:
         resp = requests.get(
             REPUTATION_SERVICE_URL,
-            params={"card": transaction["card"]},
+            params={"card": card},
             timeout=1.0,
         )
         resp.raise_for_status()
         data = resp.json()
-    except requests.RequestException as e:
-        print(f"reputation service call failed: {e}")  # temporary debug logging
+    except requests.RequestException:
         return {"reason": "reputation check unavailable"}
 
-    if data["risk_score"] > RISK_THRESHOLD:
-        return {"reason": f"reputation score {data['risk_score']} exceeds threshold"}
+    if "risk_score" not in data:
+        return {"reason": "reputation response malformed"}
+
+    risk_score = data["risk_score"]
+
+    if risk_score > RISK_THRESHOLD:
+        return {"reason": f"reputation score {risk_score} exceeds threshold"}
+
     return None
