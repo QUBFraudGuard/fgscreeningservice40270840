@@ -38,7 +38,7 @@ def test_orchestrator_passes_through_screening_py_error():
 
 
 def test_multiple_checks_triggered_stops_at_first_match():
-    result = full_screening.screen_transaction_full("500-9999-KP", THRESHOLD)
+    result = full_screening.screen_transaction_full("500-9999-ES", THRESHOLD)
 
     assert result["decision"] == "SUSPICIOUS"
     assert result["reason"] == "card on blocklist"
