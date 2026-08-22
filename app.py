@@ -19,6 +19,7 @@ import os  # lets us read environment variables (settings from outside the code)
 from flask import Flask, request, jsonify  # the web framework
 
 from screening import screen_batch  # our actual fraud-check logic
+from full_screening import screen_batch_full
 
 # Create the Flask web application.
 app = Flask(__name__)
@@ -54,7 +55,7 @@ def screen():
     items = request.args.get("items", "")
 
     # Hand the text to our checker and get back the results.
-    result = screen_batch(items, THRESHOLD)
+    result = screen_batch_full(items, THRESHOLD)
 
     # jsonify turns our Python dictionary into a proper JSON web response.
     return jsonify(result)
