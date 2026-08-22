@@ -49,7 +49,7 @@ def test_batch_mixes_ok_suspicious_and_error():
         "5000-1234-UK",      # OK
         "50000-1234-UK",     # SUSPICIOUS - amount
         "500-9999-UK",       # SUSPICIOUS - blocklist
-        "500-1234-KP",       # SUSPICIOUS - country
+        "500-1234-FR",       # SUSPICIOUS - country
         "abc-1234-UK",       # ERROR - non-numeric amount
         "5000-CARD-UK",      # ERROR - invalid card format
     ])
