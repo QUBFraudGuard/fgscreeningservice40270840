@@ -4,7 +4,6 @@
 from screening import screen_transaction
 import blocklist_check
 import country_check
-import reputation_check
 import re
 
 CARD_PATTERN = re.compile(r"^\d{4}$")
@@ -36,7 +35,7 @@ def screen_transaction_full(raw, threshold):
 
     transaction = {"raw": raw, "card": card, "country": country}
 
-    for check_fn in [blocklist_check.check, country_check.check, reputation_check.check]:
+    for check_fn in [blocklist_check.check, country_check.check]:
         result = check_fn(transaction)
         if result:
             return {"transaction": raw, "decision": "SUSPICIOUS", **result}
