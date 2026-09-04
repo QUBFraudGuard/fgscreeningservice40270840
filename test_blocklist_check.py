@@ -1,5 +1,3 @@
-
-
 import blocklist_check
 
 
