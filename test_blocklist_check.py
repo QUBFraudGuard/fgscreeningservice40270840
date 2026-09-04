@@ -1,12 +1,4 @@
-# CI-style tests for blocklist_check.
-#
-# Covers four cases
-#   1. card on blocklist
-#   2. card not on blocklist
-#   3. empty input,
-#   4. a malformed transaction.
-#
-# Run with: python -m pytest -q
+
 
 import blocklist_check
 
