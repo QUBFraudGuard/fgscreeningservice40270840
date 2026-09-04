@@ -13,5 +13,4 @@ COPY . .
 ENV THRESHOLD=10000
 EXPOSE 8070
 
-# app.py runs Flask on 0.0.0.0:8070.
 CMD ["python", "app.py"]
